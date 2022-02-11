@@ -1,11 +1,15 @@
 package fi.experis;
 
+import java.util.Arrays;
+
 public class Character {
     private String name;
     private int level;
     private String heroClass;
     private PrimaryAttributes basePrimaryAttributes;
     private PrimaryAttributes totalPrimaryAttributes;
+    private Armor[] equipment;
+    private Weapon weapon;
 
     public Character() {
         super();
@@ -16,7 +20,6 @@ public class Character {
         this.level = level;
         this.heroClass = heroClass;
         this.basePrimaryAttributes = basePrimaryAttributes;
-        this.totalPrimaryAttributes = basePrimaryAttributes;
     }
 
     public String getName() {
@@ -59,6 +62,22 @@ public class Character {
         this.totalPrimaryAttributes = totalPrimaryAttributes;
     }
 
+    public Armor[] getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(Armor[] equipment) {
+        this.equipment = equipment;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
     @Override
     public String toString() {
         return "Character{" +
@@ -67,8 +86,8 @@ public class Character {
                 ", heroClass='" + heroClass + '\'' +
                 ", basePrimaryAttributes=" + basePrimaryAttributes +
                 ", totalPrimaryAttributes=" + totalPrimaryAttributes +
+                ", equipment=" + Arrays.toString(equipment) +
+                ", weapon=" + weapon +
                 '}';
     }
-
-
 }
