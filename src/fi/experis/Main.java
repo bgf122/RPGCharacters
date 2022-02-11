@@ -89,32 +89,22 @@ public class Main {
         String selection = scanner.nextLine();
 
         switch (Integer.parseInt(selection)) {
-            case 1 -> getMoreXp();
-            case 2 -> getNewItems();
-            case 3 -> inspect();
+            case 1 -> {
+                character.getXp();
+                resume();
+            }
+            case 2 -> {
+                character.getItems();
+                resume();
+            }
+            case 3 -> {
+                character.inspect();
+                resume();
+            }
             case 0 -> {
             }
             default -> playTheGame();
         }
-    }
-
-    public static void getMoreXp() {
-        PrimaryAttributes primaryAttributes = character.getBasePrimaryAttributes();
-        String heroClass = character.getHeroClass();
-        levelUp(primaryAttributes, heroClass);
-        character.setLevel(character.getLevel() + 1);
-        System.out.println("Congratulations you have reached level " + character.getLevel() + "!");
-        resume();
-    }
-
-    public static void getNewItems() {
-        System.out.println("You have found some new item!");
-        resume();
-    }
-
-    public static void inspect() {
-        System.out.println(character);
-        resume();
     }
 
     public static void resume() {
@@ -123,18 +113,6 @@ public class Main {
         if (selection != null) {
             playTheGame();
         }
-    }
-    
-    public static void levelUp(PrimaryAttributes attributes, String heroClass) {
-        PrimaryAttributes newBaseAttributes;
-        switch (heroClass) {
-            case "Mage" -> newBaseAttributes = new PrimaryAttributes(attributes.Strength+1, attributes.Dexterity+1, attributes.Intelligence+5);
-            case "Ranger" -> newBaseAttributes = new PrimaryAttributes(attributes.Strength+1, attributes.Dexterity+5, attributes.Intelligence+1);
-            case "Rogue" -> newBaseAttributes = new PrimaryAttributes(attributes.Strength+1, attributes.Dexterity+4, attributes.Intelligence+1);
-            case "Warrior" -> newBaseAttributes = new PrimaryAttributes(attributes.Strength+3, attributes.Dexterity+2, attributes.Intelligence+5);
-            default -> throw new IllegalStateException("Unexpected value: " + heroClass);
-        }
-        character.setBasePrimaryAttributes(newBaseAttributes);
     }
  
 }

@@ -2,7 +2,7 @@ package fi.experis;
 
 import java.util.Arrays;
 
-public class Character {
+public class Character implements Play{
     private String name;
     private int level;
     private String heroClass;
@@ -89,5 +89,33 @@ public class Character {
                 ", equipment=" + Arrays.toString(equipment) +
                 ", weapon=" + weapon +
                 '}';
+    }
+
+    @Override
+    public void getXp() {
+        levelUp();
+        this.level += 1;
+        System.out.println("Congratulations you have reached level " + this.level + "!");
+    }
+
+    @Override
+    public void getItems() {
+        System.out.println("You have found some new item!");
+    }
+
+    @Override
+    public void inspect() {
+        System.out.println(this);
+    }
+
+    @Override
+    public void levelUp() {
+        switch (this.heroClass) {
+            case "Mage" -> this.basePrimaryAttributes = new PrimaryAttributes(this.basePrimaryAttributes.Strength + 1, this.basePrimaryAttributes.Dexterity + 1, this.basePrimaryAttributes.Intelligence + 5);
+            case "Ranger" -> this.basePrimaryAttributes = new PrimaryAttributes(this.basePrimaryAttributes.Strength+1, this.basePrimaryAttributes.Dexterity+5, this.basePrimaryAttributes.Intelligence+1);
+            case "Rogue" -> this.basePrimaryAttributes = new PrimaryAttributes(this.basePrimaryAttributes.Strength+1, this.basePrimaryAttributes.Dexterity+4, this.basePrimaryAttributes.Intelligence+1);
+            case "Warrior" -> this.basePrimaryAttributes = new PrimaryAttributes(this.basePrimaryAttributes.Strength+3, this.basePrimaryAttributes.Dexterity+2, this.basePrimaryAttributes.Intelligence+5);
+            default -> throw new IllegalStateException("Unexpected value: " + heroClass);
+        }
     }
 }
