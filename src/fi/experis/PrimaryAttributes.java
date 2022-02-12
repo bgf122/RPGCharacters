@@ -1,9 +1,10 @@
 package fi.experis;
 
 public class PrimaryAttributes {
-    int Strength;
-    int Dexterity;
-    int Intelligence;
+    private int Strength;
+    private int Dexterity;
+    private int Intelligence;
+
 
     public PrimaryAttributes(int strength, int dexterity, int intelligence) {
         Strength = strength;

@@ -3,14 +3,14 @@ package fi.experis;
 import java.util.Scanner;
 
 public class Main {
-    static Character character = null;
+    static Hero hero = null;
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         if (promptCharacterCreation()) {
             createCharacter();
         }
-        if (character != null) {
+        if (hero != null) {
             playTheGame();
         }
     }
@@ -38,10 +38,10 @@ public class Main {
 
     public static void createCharacter() {
         PrimaryAttributes primaryAttributes;
+        int level = 1;
         System.out.println("Enter character name: ");
         String name = scanner.nextLine();
         String heroClass = chooseClass();
-        int level = 1;
 
         switch (heroClass) {
             case "Mage" -> primaryAttributes = new PrimaryAttributes(1, 1, 8);
@@ -51,7 +51,8 @@ public class Main {
             default -> throw new IllegalStateException("Unexpected value: " + heroClass);
         }
 
-        character = new Character(name, level, heroClass, primaryAttributes);
+        hero = new Hero(name, level, primaryAttributes, heroClass);
+
     }
 
     public static String chooseClass() {
@@ -90,15 +91,16 @@ public class Main {
 
         switch (Integer.parseInt(selection)) {
             case 1 -> {
-                character.getXp();
+                hero.getXp();
+                System.out.println("Congratulations you have reached level " + hero.getLevel() + "!");
                 resume();
             }
             case 2 -> {
-                character.getItems();
+                hero.getItems();
                 resume();
             }
             case 3 -> {
-                character.inspect();
+                hero.inspect();
                 resume();
             }
             case 0 -> {
@@ -109,10 +111,8 @@ public class Main {
 
     public static void resume() {
         System.out.println("Press enter to continue...");
-        String selection = scanner.nextLine();
-        if (selection != null) {
-            playTheGame();
-        }
+        scanner.nextLine();
+        playTheGame();
     }
  
 }
