@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Random;
 
-public class Weapon extends Item{
+public class Weapon extends Item {
     private double damage;
     private double speed;
     private WeaponType weaponType;
@@ -55,8 +55,8 @@ public class Weapon extends Item{
         Slot slot = Slot.Weapon;
         int sizeWeaponTypes = weaponTypes.size();
         Random randomWeapon = new Random();
-        int level = (int) (Math.random()*60);
-        double damage = (Math.random()*level*2.8);
+        int level = (int) (Math.random() * 60);
+        double damage = (Math.random() * level * 2.8);
         double speed = 0.1 + (Math.random());
         WeaponType weaponType = weaponTypes.get(randomWeapon.nextInt(sizeWeaponTypes));
         String name = generateName(weaponType, level);
@@ -69,7 +69,7 @@ public class Weapon extends Item{
         String weaponName;
 
         switch (type) {
-            case Axes  -> weaponName = "Axe";
+            case Axes -> weaponName = "Axe";
             case Bows -> weaponName = "Bow";
             case Wands -> weaponName = "Wand";
             case Staffs -> weaponName = "Staff";
@@ -78,7 +78,6 @@ public class Weapon extends Item{
             case Hammers -> weaponName = "Hammer";
             default -> weaponName = "";
         }
-
 
 
         return quality + " " + weaponName;

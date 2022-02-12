@@ -45,10 +45,10 @@ public class Armor extends Item {
         int sizeSlot = slotTypes.size();
         Random randomArmor = new Random();
         Random randomSlot = new Random();
-        int level = (int) (Math.random()*60);
-        int strength = (int) (Math.random()*level*1.5);
-        int dexterity = (int) (Math.random()*level*1.5);
-        int intelligence = (int) (Math.random()*level*1.5);
+        int level = (int) (Math.random() * 60);
+        int strength = (int) (Math.random() * level * 1.5);
+        int dexterity = (int) (Math.random() * level * 1.5);
+        int intelligence = (int) (Math.random() * level * 1.5);
         PrimaryAttributes primaryAttributes = new PrimaryAttributes(strength, dexterity, intelligence);
         ArmorType armorType = armorTypes.get(randomArmor.nextInt(sizeArmor));
         Slot slot = slotTypes.get(randomSlot.nextInt(sizeSlot - 1));
@@ -80,9 +80,9 @@ public class Armor extends Item {
                 Random randomLegs = new Random();
                 int sizeLegs = legsPrefixes.size();
                 slotName = String.valueOf(legsPrefixes.get(randomLegs.nextInt(sizeLegs)));
-            } default -> slotName = "";
+            }
+            default -> slotName = "";
         }
-
 
 
         return quality + " " + armorName + " " + slotName;

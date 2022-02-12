@@ -20,30 +20,24 @@ public class Hero extends Character {
         Armor newArmor;
         Weapon newWeapon;
 
-        switch (random) {
-            case 0 -> {
-                newArmor = Armor.createItem();
-                System.out.println(newArmor.getName());
-                System.out.println(newArmor.getLevel());
-                System.out.println("Strength: " + newArmor.getPrimaryAttributes().getStrength());
-                System.out.println("Dexterity: " + newArmor.getPrimaryAttributes().getDexterity());
-                System.out.println("Intelligence: " + newArmor.getPrimaryAttributes().getIntelligence());
+        if (random == 0) {
+            newArmor = Armor.createItem();
+            Writer.armorWriter(newArmor);
+            if (Writer.promptEquip()) {
+                setEquipment(newArmor.getSlot(), newArmor);
             }
-            default -> {
-                newWeapon = Weapon.createItem();
-                System.out.println(newWeapon.getName());
-                System.out.println(newWeapon.getLevel());
-                System.out.println("Damage: " + newWeapon.getDamage());
-                System.out.println("Speed: " + newWeapon.getSpeed());
-                System.out.println("DPS: " + newWeapon.getDamage()*newWeapon.getSpeed());
+        } else {
+            newWeapon = Weapon.createItem();
+            Writer.weaponWriter(newWeapon);
+            if (Writer.promptEquip()) {
+                setEquipment(Slot.Weapon, newWeapon);
             }
         }
-
     }
 
     @Override
     public void inspect() {
-        System.out.println(this);
+        Writer.inspect(this);
     }
 
     @Override

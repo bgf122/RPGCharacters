@@ -1,5 +1,6 @@
 package fi.experis;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -7,7 +8,7 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        if (promptCharacterCreation()) {
+        if (Writer.promptCharacterCreation()) {
             createCharacter();
         }
         if (hero != null) {
@@ -15,26 +16,6 @@ public class Main {
         }
     }
 
-    public static boolean promptCharacterCreation() {
-        System.out.println("No character found, would you like to create a new one?(press 1 or 2)");
-        System.out.println("1. Yes");
-        System.out.println("2. No");
-        String input = scanner.nextLine();
-
-        switch (Integer.parseInt(input)) {
-            case 1 -> {
-                return true;
-            }
-            case 2 -> {
-                return false;
-            }
-            default -> {
-                promptCharacterCreation();
-                return false;
-            }
-        }
-
-    }
 
     public static void createCharacter() {
         PrimaryAttributes primaryAttributes;
@@ -82,37 +63,42 @@ public class Main {
     }
 
     public static void playTheGame() {
-        System.out.println("What would you like to do: ");
-        System.out.println("1. XP");
-        System.out.println("2. Loot");
-        System.out.println("3. Inspect character");
-        System.out.println("0. Quit the Game");
-        String selection = scanner.nextLine();
+        int input = 0;
+        do {
+            try {
+                System.out.println("What would you like to do: ");
+                System.out.println("1. XP");
+                System.out.println("2. Loot");
+                System.out.println("3. Inspect character");
+                System.out.println("4. Quit the Game");
+                input = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid entry try again");
+            }
+            scanner.nextLine();
+        } while (input != 1 && input != 2 && input != 3 && input != 4);
 
-        switch (Integer.parseInt(selection)) {
+        switch (input) {
             case 1 -> {
                 hero.getXp();
                 System.out.println("Congratulations you have reached level " + hero.getLevel() + "!");
-                resume();
+                Writer.resume();
+                playTheGame();
             }
             case 2 -> {
                 hero.getItems();
-                resume();
+                Writer.resume();
+                playTheGame();
             }
             case 3 -> {
                 hero.inspect();
-                resume();
+                Writer.resume();
+                playTheGame();
             }
-            case 0 -> {
+            case 4 -> {
             }
             default -> playTheGame();
         }
     }
 
-    public static void resume() {
-        System.out.println("Press enter to continue...");
-        scanner.nextLine();
-        playTheGame();
-    }
- 
 }

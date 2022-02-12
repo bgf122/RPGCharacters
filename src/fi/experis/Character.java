@@ -7,7 +7,7 @@ public abstract class Character implements Play {
     private int level;
     private PrimaryAttributes basePrimaryAttributes;
     private PrimaryAttributes totalPrimaryAttributes;
-    private HashMap<Slot, Item> equipment = new HashMap();
+    private final HashMap<Slot, Item> equipment = new HashMap();
 
     public Character(String name, int level, PrimaryAttributes basePrimaryAttributes) {
         this.name = name;
