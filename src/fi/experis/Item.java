@@ -2,7 +2,7 @@ package fi.experis;
 
 import org.jetbrains.annotations.NotNull;
 
-public abstract class Item {
+public abstract class Item{
     private String name;
     private Slot slot;
     private int level;
@@ -64,4 +64,5 @@ public abstract class Item {
         }
         return quality;
     }
+
 }

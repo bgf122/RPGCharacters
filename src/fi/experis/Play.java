@@ -3,7 +3,7 @@ package fi.experis;
 public interface Play {
     void getXp();
 
-    void getItems();
+    void getItems() throws InvalidWeaponException, InvalidArmorException;
 
     void inspect();
 

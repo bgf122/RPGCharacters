@@ -1,11 +1,9 @@
 package fi.experis;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 import java.util.Random;
 
-public class Weapon extends Item {
+public class Weapon extends Item{
     private double damage;
     private double speed;
     private WeaponType weaponType;
@@ -60,7 +58,6 @@ public class Weapon extends Item {
         double speed = 0.1 + (Math.random());
         WeaponType weaponType = weaponTypes.get(randomWeapon.nextInt(sizeWeaponTypes));
         String name = generateName(weaponType, level);
-
         return new Weapon(name, slot, level, damage, speed, weaponType);
     }
 
@@ -79,8 +76,26 @@ public class Weapon extends Item {
             default -> weaponName = "";
         }
 
-
         return quality + " " + weaponName;
     }
 
+    public boolean isValid(Weapon weapon, HeroClass heroClass, int level) {
+
+        if (level < weapon.getLevel()) {
+            return false;
+        }
+
+        switch (heroClass) {
+            case Mage -> {
+                if (weapon.weaponType != WeaponType.Staffs && weapon.weaponType != WeaponType.Wands) return false;
+            } case Ranger -> {
+                if (weapon.weaponType != WeaponType.Bows) return false;
+            } case Rogue -> {
+                if (weapon.weaponType != WeaponType.Daggers && weapon.weaponType != WeaponType.Swords) return false;
+            } case Warrior -> {
+                if (weapon.weaponType != WeaponType.Axes && weapon.weaponType != WeaponType.Hammers && weapon.weaponType != WeaponType.Swords) return false;
+            }
+        }
+        return true;
+    }
 }

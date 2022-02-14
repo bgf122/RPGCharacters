@@ -37,7 +37,6 @@ public class Armor extends Item {
                 '}';
     }
 
-
     public static Armor createItem() {
         List<ArmorType> armorTypes = List.of(ArmorType.values());
         List<Slot> slotTypes = List.of(Slot.values());
@@ -87,4 +86,38 @@ public class Armor extends Item {
 
         return quality + " " + armorName + " " + slotName;
     }
+
+    public boolean isValid(Armor armor, HeroClass heroClass, int level) {
+
+        if (level < armor.getLevel()) {
+            return false;
+        }
+
+        switch (heroClass) {
+            case Mage -> {
+                if (armor.armorType != ArmorType.Cloth) return false;
+            } case Ranger, Rogue -> {
+                if (armor.armorType != ArmorType.Mail && armor.armorType != ArmorType.Leather) return false;
+            } case Warrior -> {
+                if (armor.armorType != ArmorType.Mail && armor.armorType != ArmorType.Plate) return false;
+            }
+        }
+        return true;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

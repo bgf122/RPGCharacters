@@ -1,6 +1,7 @@
 package fi.experis;
 
 import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -16,19 +17,18 @@ public class Main {
         }
     }
 
-
     public static void createCharacter() {
         PrimaryAttributes primaryAttributes;
         int level = 1;
         System.out.println("Enter character name: ");
         String name = scanner.nextLine();
-        String heroClass = chooseClass();
+        HeroClass heroClass = chooseClass();
 
-        switch (heroClass) {
-            case "Mage" -> primaryAttributes = new PrimaryAttributes(1, 1, 8);
-            case "Ranger" -> primaryAttributes = new PrimaryAttributes(1, 7, 1);
-            case "Rogue" -> primaryAttributes = new PrimaryAttributes(2, 6, 1);
-            case "Warrior" -> primaryAttributes = new PrimaryAttributes(5, 2, 1);
+        switch (Objects.requireNonNull(heroClass)) {
+            case Mage -> primaryAttributes = new PrimaryAttributes(1, 1, 8);
+            case Ranger -> primaryAttributes = new PrimaryAttributes(1, 7, 1);
+            case Rogue -> primaryAttributes = new PrimaryAttributes(2, 6, 1);
+            case Warrior -> primaryAttributes = new PrimaryAttributes(5, 2, 1);
             default -> throw new IllegalStateException("Unexpected value: " + heroClass);
         }
 
@@ -36,30 +36,39 @@ public class Main {
 
     }
 
-    public static String chooseClass() {
-        System.out.println("Choose class: ");
-        System.out.println("1. Mage");
-        System.out.println("2. Ranger");
-        System.out.println("3. Rogue");
-        System.out.println("4. Warrior");
-        String selection = scanner.nextLine();
+    public static HeroClass chooseClass() {
+        int input = 0;
 
-        switch (Integer.parseInt(selection)) {
+        do {
+            try {
+                System.out.println("Choose class: ");
+                System.out.println("1. Mage");
+                System.out.println("2. Ranger");
+                System.out.println("3. Rogue");
+                System.out.println("4. Warrior");
+                input = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid entry try again");
+            }
+            scanner.nextLine();
+        } while (input != 1 && input != 2 && input != 3 && input != 4);
+
+        switch (input) {
             case 1 -> {
-                return "Mage";
+                return HeroClass.Mage;
             }
             case 2 -> {
-                return "Ranger";
+                return HeroClass.Ranger;
             }
             case 3 -> {
-                return "Rogue";
+                return HeroClass.Rogue;
             }
             case 4 -> {
-                return "Warrior";
+                return HeroClass.Warrior;
             }
-            default -> chooseClass();
+            default -> throw new IllegalStateException("Unexpected value: " + input);
         }
-        return "Invalid";
+
     }
 
     public static void playTheGame() {
@@ -86,7 +95,11 @@ public class Main {
                 playTheGame();
             }
             case 2 -> {
-                hero.getItems();
+                try {
+                    hero.getItems();
+                } catch (InvalidCustomException e) {
+                    System.out.println(e.getMessage());
+                }
                 Writer.resume();
                 playTheGame();
             }
