@@ -19,7 +19,7 @@ public class Main {
 
     public static void createCharacter() {
         PrimaryAttributes primaryAttributes;
-        int level = 1;
+        int level = 60;
         System.out.println("Enter character name: ");
         String name = scanner.nextLine();
         HeroClass heroClass = chooseClass();

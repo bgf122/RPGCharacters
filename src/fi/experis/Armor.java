@@ -82,8 +82,6 @@ public class Armor extends Item {
             }
             default -> slotName = "";
         }
-
-
         return quality + " " + armorName + " " + slotName;
     }
 

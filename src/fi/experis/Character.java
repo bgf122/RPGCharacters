@@ -7,12 +7,13 @@ public abstract class Character implements Play {
     private int level;
     private PrimaryAttributes basePrimaryAttributes;
     private PrimaryAttributes totalPrimaryAttributes;
-    private final HashMap<Slot, Item> equipment = new HashMap();
+    private final static HashMap<Slot, Item> equipment = new HashMap<>();
 
     public Character(String name, int level, PrimaryAttributes basePrimaryAttributes) {
         this.name = name;
         this.level = level;
         this.basePrimaryAttributes = basePrimaryAttributes;
+        this.totalPrimaryAttributes = basePrimaryAttributes;
     }
 
     public String getName() {
@@ -27,8 +28,12 @@ public abstract class Character implements Play {
         return equipment;
     }
 
-    public void setEquipment(Slot slot, Item item) {
-        equipment.put(slot, item);
+    public void setEquipment(Slot slot, Armor armor) {
+        equipment.put(slot, armor);
+    }
+
+    public void setEquipment(Weapon weapon) {
+        equipment.put(Slot.Weapon, weapon);
     }
 
     public int getLevel() {

@@ -8,6 +8,10 @@ public class Hero extends Character {
         this.heroClass = heroClass;
     }
 
+    public HeroClass getHeroClass() {
+        return heroClass;
+    }
+
     @Override
     public void getXp() {
         levelUp();
@@ -26,6 +30,7 @@ public class Hero extends Character {
             if (Writer.promptEquip()) {
                 if (newArmor.isValid(newArmor, heroClass, this.getLevel())) {
                     setEquipment(newArmor.getSlot(), newArmor);
+                    calculateTotalAttributes();
                 }  else {
                     throw new InvalidArmorException("Wrong type of equipment or too high level");
                 }
@@ -35,7 +40,7 @@ public class Hero extends Character {
             Writer.weaponWriter(newWeapon);
             if (Writer.promptEquip()) {
                 if (newWeapon.isValid(newWeapon, heroClass, this.getLevel())) {
-                    setEquipment(Slot.Weapon, newWeapon);
+                    setEquipment(newWeapon);
                 } else {
                     throw new InvalidWeaponException("Wrong type of equipment or too high level");
                 }
@@ -75,6 +80,26 @@ public class Hero extends Character {
             }
             default -> throw new IllegalStateException("Unexpected value: " + heroClass);
         }
+    }
+
+    public void calculateTotalAttributes() {
+        PrimaryAttributes baseAttributes = getBasePrimaryAttributes();
+        setTotalPrimaryAttributes(baseAttributes);
+
+        getEquipment().forEach((key,value) -> {
+            if (key != Slot.Weapon) {
+                Armor armor = (Armor) value;
+                final PrimaryAttributes attributes = getTotalPrimaryAttributes();
+                final PrimaryAttributes armorAttributes = armor.getPrimaryAttributes();
+                final int totalStr = attributes.getStrength() + armorAttributes.getStrength();
+                final int totalDex = attributes.getDexterity() + armorAttributes.getDexterity();
+                final int totalInt = attributes.getIntelligence() + armorAttributes.getIntelligence();
+                PrimaryAttributes newAttributes = new PrimaryAttributes(totalStr, totalDex, totalInt);
+                setTotalPrimaryAttributes(newAttributes);
+            }
+        });
+
+
     }
 }
 

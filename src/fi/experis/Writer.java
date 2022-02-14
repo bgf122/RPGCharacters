@@ -1,5 +1,6 @@
 package fi.experis;
 
+import java.text.DecimalFormat;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -83,13 +84,42 @@ public class Writer {
         return false;
     }
     public static void inspect(Hero hero) {
-        System.out.println("Name: " + hero.getName());
-        System.out.println("Level: " + hero.getLevel());
-        System.out.println("Attributes");
-        System.out.println("Strength: " + hero.getBasePrimaryAttributes().getStrength());
-        System.out.println("Dexterity: " + hero.getBasePrimaryAttributes().getDexterity());
-        System.out.println("Intelligence: " + hero.getBasePrimaryAttributes().getIntelligence());
-        System.out.println("Equipment: " + hero.getEquipment());
+        StringBuilder str = new StringBuilder();
+        str
+            .append("Name: ")
+            .append(hero.getName())
+            .append("\nLevel: ")
+            .append(hero.getLevel())
+            .append("\nAttributes")
+            .append("\nStrength: ")
+            .append(hero.getTotalPrimaryAttributes().getStrength())
+            .append("\nDexterity: ")
+            .append(hero.getTotalPrimaryAttributes().getDexterity())
+            .append("\nIntelligence: ")
+            .append(hero.getTotalPrimaryAttributes().getIntelligence())
+            .append("\nEquipment");
+        hero.getEquipment().forEach((key, value) -> {
+            str.append("\n")
+                .append(value.getName());
+        });
+        str.append("\nDamage");
+        hero.getEquipment().forEach((key, value) -> {
+            if (key == Slot.Weapon) {
+                Weapon currentWeapon = (Weapon) value;
+                HeroClass heroClass = hero.getHeroClass();
+                float modifier = 0;
+                switch (heroClass) {
+                    case Warrior -> modifier = hero.getTotalPrimaryAttributes().getStrength();
+                    case Rogue, Ranger -> modifier = hero.getTotalPrimaryAttributes().getDexterity();
+                    case Mage -> modifier = hero.getTotalPrimaryAttributes().getIntelligence();
+                }
+                DecimalFormat f = new DecimalFormat(".00");
+                double dps = currentWeapon.getDamage() * currentWeapon.getSpeed() * (1 + modifier / 100);
+                str.append("\nDPS: ").append(f.format(dps));
+            }
+        });
+
+        System.out.println(str);
     }
 
 
