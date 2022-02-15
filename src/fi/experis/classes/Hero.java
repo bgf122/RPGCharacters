@@ -1,4 +1,9 @@
-package fi.experis;
+package fi.experis.classes;
+
+import fi.experis.exceptions.InvalidArmorException;
+import fi.experis.exceptions.InvalidWeaponException;
+import fi.experis.enumerators.HeroClass;
+import fi.experis.enumerators.Slot;
 
 public class Hero extends Character {
     private final HeroClass heroClass;
@@ -19,7 +24,7 @@ public class Hero extends Character {
     }
 
     @Override
-    public void getItems() throws InvalidWeaponException, InvalidArmorException {
+    public void getItems() throws InvalidArmorException, InvalidWeaponException {
         int random = (int) Math.round(Math.random());
         Armor newArmor;
         Weapon newWeapon;
@@ -28,24 +33,42 @@ public class Hero extends Character {
             newArmor = Armor.createItem();
             Writer.armorWriter(newArmor);
             if (Writer.promptEquip()) {
-                if (newArmor.isValid(newArmor, heroClass, this.getLevel())) {
-                    setEquipment(newArmor.getSlot(), newArmor);
-                    calculateTotalAttributes();
-                }  else {
-                    throw new InvalidArmorException("Wrong type of equipment or too high level");
-                }
+                equipItem(newArmor);
             }
         } else {
             newWeapon = Weapon.createItem();
             Writer.weaponWriter(newWeapon);
             if (Writer.promptEquip()) {
-                if (newWeapon.isValid(newWeapon, heroClass, this.getLevel())) {
-                    setEquipment(newWeapon);
-                } else {
-                    throw new InvalidWeaponException("Wrong type of equipment or too high level");
-                }
-
+                equipItem(newWeapon);
             }
+        }
+
+    }
+
+    @Override
+    public void equipItem(Item item) throws InvalidWeaponException, InvalidArmorException {
+        Armor newArmor;
+        Weapon newWeapon;
+
+        if (item.getSlot() != Slot.Weapon) {
+            newArmor = (Armor) item;
+            if (newArmor.isValid(newArmor, heroClass, this.getLevel())) {
+                setEquipment(newArmor.getSlot(), newArmor);
+                calculateTotalAttributes();
+            } else {
+                throw new InvalidArmorException("Wrong type of equipment or too high level");
+            }
+        } else {
+            newWeapon = (Weapon) item;
+            if (newWeapon.isValid(newWeapon, heroClass, this.getLevel())) {
+                setEquipment(newWeapon);
+            } else {
+                throw new InvalidWeaponException("Wrong type of equipment or too high level");
+
+        }
+
+
+
         }
     }
 
@@ -80,6 +103,7 @@ public class Hero extends Character {
             }
             default -> throw new IllegalStateException("Unexpected value: " + heroClass);
         }
+        calculateTotalAttributes();
     }
 
     public void calculateTotalAttributes() {

@@ -1,4 +1,7 @@
-package fi.experis;
+package fi.experis.classes;
+
+import fi.experis.enumerators.HeroClass;
+import fi.experis.enumerators.Slot;
 
 import java.text.DecimalFormat;
 import java.util.InputMismatchException;
@@ -47,9 +50,6 @@ public class Writer {
         System.out.println("Intelligence: " + armor.getPrimaryAttributes().getIntelligence());
         System.out.println();
 
-
-
-
     }
     public static void weaponWriter(Weapon weapon) {
         System.out.println(weapon.getName());
@@ -85,8 +85,9 @@ public class Writer {
     }
     public static void inspect(Hero hero) {
         StringBuilder str = new StringBuilder();
-        str
-            .append("Name: ")
+        DecimalFormat f = new DecimalFormat(".00");
+
+        str.append("Name: ")
             .append(hero.getName())
             .append("\nLevel: ")
             .append(hero.getLevel())
@@ -98,24 +99,22 @@ public class Writer {
             .append("\nIntelligence: ")
             .append(hero.getTotalPrimaryAttributes().getIntelligence())
             .append("\nEquipment");
-        hero.getEquipment().forEach((key, value) -> {
-            str.append("\n")
-                .append(value.getName());
-        });
+        hero.getEquipment().forEach((key, value) -> str.append("\n")
+            .append(value.getName()));
         str.append("\nDamage");
         hero.getEquipment().forEach((key, value) -> {
             if (key == Slot.Weapon) {
                 Weapon currentWeapon = (Weapon) value;
                 HeroClass heroClass = hero.getHeroClass();
-                float modifier = 0;
+                double modifier = 0;
                 switch (heroClass) {
                     case Warrior -> modifier = hero.getTotalPrimaryAttributes().getStrength();
                     case Rogue, Ranger -> modifier = hero.getTotalPrimaryAttributes().getDexterity();
                     case Mage -> modifier = hero.getTotalPrimaryAttributes().getIntelligence();
                 }
-                DecimalFormat f = new DecimalFormat(".00");
                 double dps = currentWeapon.getDamage() * currentWeapon.getSpeed() * (1 + modifier / 100);
-                str.append("\nDPS: ").append(f.format(dps));
+                str.append("\nDPS: ")
+                    .append(f.format(dps));
             }
         });
 

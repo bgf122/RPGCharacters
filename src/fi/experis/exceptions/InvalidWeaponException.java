@@ -1,4 +1,4 @@
-package fi.experis;
+package fi.experis.exceptions;
 
 public class InvalidWeaponException extends InvalidCustomException{
     public InvalidWeaponException(String message) {

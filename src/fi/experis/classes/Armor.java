@@ -1,4 +1,6 @@
-package fi.experis;
+package fi.experis.classes;
+
+import fi.experis.enumerators.*;
 
 import java.util.List;
 import java.util.Random;
@@ -59,7 +61,7 @@ public class Armor extends Item {
     public static String generateName(ArmorType type, Slot slot, int level) {
         String armorName = type.name();
         String slotName;
-        String quality = Item.getString(level);
+        String quality = Item.getQuality(level);
 
         switch (slot) {
             case Body -> {

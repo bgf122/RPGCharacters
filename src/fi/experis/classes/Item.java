@@ -1,5 +1,7 @@
-package fi.experis;
+package fi.experis.classes;
 
+import fi.experis.enumerators.ItemPrefix;
+import fi.experis.enumerators.Slot;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Item{
@@ -47,7 +49,7 @@ public abstract class Item{
     }
 
     @NotNull
-    static String getString(int level) {
+    static String getQuality(int level) {
         String quality;
         if (level <= 10) {
             quality = String.valueOf(ItemPrefix.Poor);

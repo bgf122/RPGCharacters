@@ -1,4 +1,8 @@
-package fi.experis;
+package fi.experis.classes;
+
+import fi.experis.enumerators.HeroClass;
+import fi.experis.enumerators.Slot;
+import fi.experis.enumerators.WeaponType;
 
 import java.util.List;
 import java.util.Random;
@@ -62,7 +66,7 @@ public class Weapon extends Item{
     }
 
     public static String generateName(WeaponType type, int level) {
-        String quality = Item.getString(level);
+        String quality = Item.getQuality(level);
         String weaponName;
 
         switch (type) {

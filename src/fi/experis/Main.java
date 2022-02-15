@@ -1,5 +1,11 @@
 package fi.experis;
 
+import fi.experis.classes.Hero;
+import fi.experis.classes.PrimaryAttributes;
+import fi.experis.classes.Writer;
+import fi.experis.enumerators.HeroClass;
+import fi.experis.exceptions.InvalidCustomException;
+
 import java.util.InputMismatchException;
 import java.util.Objects;
 import java.util.Scanner;
@@ -19,7 +25,7 @@ public class Main {
 
     public static void createCharacter() {
         PrimaryAttributes primaryAttributes;
-        int level = 60;
+        int level = 1;
         System.out.println("Enter character name: ");
         String name = scanner.nextLine();
         HeroClass heroClass = chooseClass();

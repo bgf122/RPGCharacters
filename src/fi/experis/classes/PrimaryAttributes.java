@@ -1,4 +1,4 @@
-package fi.experis;
+package fi.experis.classes;
 
 public class PrimaryAttributes {
     private int Strength;

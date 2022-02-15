@@ -1,4 +1,7 @@
-package fi.experis;
+package fi.experis.classes;
+
+import fi.experis.interfaces.Play;
+import fi.experis.enumerators.Slot;
 
 import java.util.HashMap;
 
