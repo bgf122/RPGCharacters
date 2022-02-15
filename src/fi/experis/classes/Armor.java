@@ -8,14 +8,8 @@ public class Armor extends Item {
     private PrimaryAttributes primaryAttributes;
     private ArmorType armorType;
 
-    public Armor(String name, Slot slot, int level, PrimaryAttributes primaryAttributes, ArmorType armorType) {
-        super(name, slot, level);
-        this.primaryAttributes = primaryAttributes;
-        this.armorType = armorType;
-    }
-
-    public PrimaryAttributes getPrimaryAttributes() {
-        return primaryAttributes;
+    public Armor() {
+        super();
     }
 
     public void setPrimaryAttributes(PrimaryAttributes primaryAttributes) {
@@ -28,6 +22,16 @@ public class Armor extends Item {
 
     public void setArmorType(ArmorType armorType) {
         this.armorType = armorType;
+    }
+
+    public Armor(String name, Slot slot, int level, PrimaryAttributes primaryAttributes, ArmorType armorType) {
+        super(name, slot, level);
+        this.primaryAttributes = primaryAttributes;
+        this.armorType = armorType;
+    }
+
+    public PrimaryAttributes getPrimaryAttributes() {
+        return primaryAttributes;
     }
 
     @Override
@@ -85,32 +89,7 @@ public class Armor extends Item {
         }
         return quality + " " + armorName + " " + slotName;
     }
-
-    public boolean isValid(Armor armor, HeroClass heroClass, int level) {
-
-        if (level < armor.getLevel()) {
-            return false;
-        }
-
-        switch (heroClass) {
-            case Mage -> {
-                if (armor.armorType != ArmorType.Cloth) return false;
-            } case Ranger, Rogue -> {
-                if (armor.armorType != ArmorType.Mail && armor.armorType != ArmorType.Leather) return false;
-            } case Warrior -> {
-                if (armor.armorType != ArmorType.Mail && armor.armorType != ArmorType.Plate) return false;
-            }
-        }
-        return true;
-    }
 }
-
-
-
-
-
-
-
 
 
 

@@ -9,9 +9,8 @@ public interface Play {
 
     void getItems() throws InvalidArmorException, InvalidWeaponException;
 
-    void equipItem(Item item) throws InvalidWeaponException, InvalidArmorException;
-
     void inspect();
 
     void levelUp();
+
 }

@@ -9,33 +9,13 @@ public abstract class Item{
     private Slot slot;
     private int level;
 
+    public Item() {
+        super();
+    }
+
     public Item(String name, Slot slot, int level) {
         this.name = name;
         this.slot = slot;
-        this.level = level;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Slot getSlot() {
-        return slot;
-    }
-
-    public void setSlot(Slot slot) {
-        this.slot = slot;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
         this.level = level;
     }
 
@@ -67,4 +47,27 @@ public abstract class Item{
         return quality;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Slot getSlot() {
+        return slot;
+    }
+
+    public void setSlot(Slot slot) {
+        this.slot = slot;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
 }

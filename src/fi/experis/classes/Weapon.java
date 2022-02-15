@@ -12,6 +12,26 @@ public class Weapon extends Item{
     private double speed;
     private WeaponType weaponType;
 
+    public Weapon() {
+        super();
+    }
+
+    public void setDamage(double damage) {
+        this.damage = damage;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public WeaponType getWeaponType() {
+        return weaponType;
+    }
+
+    public void setWeaponType(WeaponType weaponType) {
+        this.weaponType = weaponType;
+    }
+
     public Weapon(String name, int level, double damage, double speed, WeaponType weaponType) {
         super(name, Slot.Weapon, level);
         this.damage = damage;
@@ -29,24 +49,8 @@ public class Weapon extends Item{
         return damage;
     }
 
-    public void setDamage(double damage) {
-        this.damage = damage;
-    }
-
     public double getSpeed() {
         return speed;
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
-
-    public WeaponType getWeaponType() {
-        return weaponType;
-    }
-
-    public void setWeaponType(WeaponType weaponType) {
-        this.weaponType = weaponType;
     }
 
     @Override
@@ -60,7 +64,6 @@ public class Weapon extends Item{
 
     public static Weapon createItem() {
         List<WeaponType> weaponTypes = List.of(WeaponType.values());
-        Slot slot = Slot.Weapon;
         int sizeWeaponTypes = weaponTypes.size();
         Random randomWeapon = new Random();
         int level = (int) (1 + Math.random() * 59);
@@ -89,23 +92,4 @@ public class Weapon extends Item{
         return quality + " " + weaponName;
     }
 
-    public boolean isValid(Weapon weapon, HeroClass heroClass, int level) {
-
-        if (level < weapon.getLevel()) {
-            return false;
-        }
-
-        switch (heroClass) {
-            case Mage -> {
-                if (weapon.weaponType != WeaponType.Staffs && weapon.weaponType != WeaponType.Wands) return false;
-            } case Ranger -> {
-                if (weapon.weaponType != WeaponType.Bows) return false;
-            } case Rogue -> {
-                if (weapon.weaponType != WeaponType.Daggers && weapon.weaponType != WeaponType.Swords) return false;
-            } case Warrior -> {
-                if (weapon.weaponType != WeaponType.Axes && weapon.weaponType != WeaponType.Hammers && weapon.weaponType != WeaponType.Swords) return false;
-            }
-        }
-        return true;
-    }
 }

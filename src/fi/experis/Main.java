@@ -5,8 +5,8 @@ import fi.experis.classes.PrimaryAttributes;
 import fi.experis.classes.Weapon;
 import fi.experis.classes.Writer;
 import fi.experis.enumerators.HeroClass;
-import fi.experis.enumerators.Slot;
 import fi.experis.exceptions.InvalidCustomException;
+import fi.experis.exceptions.InvalidWeaponException;
 
 import java.util.InputMismatchException;
 import java.util.Objects;
@@ -16,7 +16,7 @@ public class Main {
     static Hero hero = null;
     static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidWeaponException {
         if (Writer.promptCharacterCreation()) {
             createCharacter();
         }
@@ -25,7 +25,7 @@ public class Main {
         }
     }
 
-    public static void createCharacter() {
+    public static void createCharacter() throws InvalidWeaponException {
         PrimaryAttributes primaryAttributes;
         int level = 1;
         System.out.println("Enter character name: ");
@@ -41,8 +41,6 @@ public class Main {
         }
 
         hero = new Hero(name, level, primaryAttributes, heroClass);
-        Weapon weapon = new Weapon("Unarmed", 1, 1, 1);
-        hero.setEquipment(weapon);
 
     }
 

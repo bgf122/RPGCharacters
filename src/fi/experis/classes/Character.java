@@ -1,5 +1,7 @@
 package fi.experis.classes;
 
+import fi.experis.exceptions.InvalidArmorException;
+import fi.experis.exceptions.InvalidWeaponException;
 import fi.experis.interfaces.Play;
 import fi.experis.enumerators.Slot;
 
@@ -10,13 +12,18 @@ public abstract class Character implements Play {
     private int level;
     private PrimaryAttributes basePrimaryAttributes;
     private PrimaryAttributes totalPrimaryAttributes;
-    private final static HashMap<Slot, Item> equipment = new HashMap<>();
+    private final HashMap<Slot, Item> equipment = new HashMap<>();
 
     public Character(String name, int level, PrimaryAttributes basePrimaryAttributes) {
         this.name = name;
         this.level = level;
         this.basePrimaryAttributes = basePrimaryAttributes;
         this.totalPrimaryAttributes = basePrimaryAttributes;
+        Weapon weapon = new Weapon("Unarmed", 1, 1, 1);
+        equipment.put(Slot.Weapon, weapon);
+    }
+
+    public Character() {
     }
 
     public String getName() {
@@ -63,14 +70,4 @@ public abstract class Character implements Play {
         this.totalPrimaryAttributes = totalPrimaryAttributes;
     }
 
-    @Override
-    public String toString() {
-        return "Character{" +
-                "name='" + name + '\'' +
-                ", level=" + level +
-                ", basePrimaryAttributes=" + basePrimaryAttributes +
-                ", totalPrimaryAttributes=" + totalPrimaryAttributes +
-                ", equipment=" + equipment +
-                '}';
-    }
 }
