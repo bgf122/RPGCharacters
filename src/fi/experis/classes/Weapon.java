@@ -12,11 +12,17 @@ public class Weapon extends Item{
     private double speed;
     private WeaponType weaponType;
 
-    public Weapon(String name, Slot slot, int level, double damage, double speed, WeaponType weaponType) {
-        super(name, slot, level);
+    public Weapon(String name, int level, double damage, double speed, WeaponType weaponType) {
+        super(name, Slot.Weapon, level);
         this.damage = damage;
         this.speed = speed;
         this.weaponType = weaponType;
+    }
+
+    public Weapon(String name, int level, double damage, double speed) {
+        super(name, Slot.Weapon, level);
+        this.damage = damage;
+        this.speed = speed;
     }
 
     public double getDamage() {
@@ -57,12 +63,12 @@ public class Weapon extends Item{
         Slot slot = Slot.Weapon;
         int sizeWeaponTypes = weaponTypes.size();
         Random randomWeapon = new Random();
-        int level = (int) (Math.random() * 60);
+        int level = (int) (1 + Math.random() * 59);
         double damage = (Math.random() * level * 2.8);
         double speed = 0.1 + (Math.random());
         WeaponType weaponType = weaponTypes.get(randomWeapon.nextInt(sizeWeaponTypes));
         String name = generateName(weaponType, level);
-        return new Weapon(name, slot, level, damage, speed, weaponType);
+        return new Weapon(name, level, damage, speed, weaponType);
     }
 
     public static String generateName(WeaponType type, int level) {

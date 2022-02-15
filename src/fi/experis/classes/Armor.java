@@ -1,7 +1,6 @@
 package fi.experis.classes;
 
 import fi.experis.enumerators.*;
-
 import java.util.List;
 import java.util.Random;
 
@@ -46,7 +45,7 @@ public class Armor extends Item {
         int sizeSlot = slotTypes.size();
         Random randomArmor = new Random();
         Random randomSlot = new Random();
-        int level = (int) (Math.random() * 60);
+        int level = (int) (1 + Math.random() * 59);
         int strength = (int) (Math.random() * level * 1.5);
         int dexterity = (int) (Math.random() * level * 1.5);
         int intelligence = (int) (Math.random() * level * 1.5);

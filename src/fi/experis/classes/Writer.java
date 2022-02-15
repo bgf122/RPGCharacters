@@ -89,18 +89,28 @@ public class Writer {
 
         str.append("Name: ")
             .append(hero.getName())
-            .append("\nLevel: ")
-            .append(hero.getLevel())
-            .append("\nAttributes")
-            .append("\nStrength: ")
-            .append(hero.getTotalPrimaryAttributes().getStrength())
-            .append("\nDexterity: ")
-            .append(hero.getTotalPrimaryAttributes().getDexterity())
-            .append("\nIntelligence: ")
-            .append(hero.getTotalPrimaryAttributes().getIntelligence())
-            .append("\nEquipment");
-        hero.getEquipment().forEach((key, value) -> str.append("\n")
-            .append(value.getName()));
+                .append("\nLevel: ")
+                    .append(hero.getLevel())
+                        .append("\nAttributes")
+                            .append("\nStrength: ")
+                                .append(hero.getTotalPrimaryAttributes().getStrength())
+                                    .append("\nDexterity: ")
+                                        .append(hero.getTotalPrimaryAttributes().getDexterity())
+                                            .append("\nIntelligence: ")
+                                                .append(hero.getTotalPrimaryAttributes().getIntelligence())
+                                                    .append("\nEquipment");
+        hero.getEquipment().forEach((key, value) -> {
+            if (key == Slot.Weapon) {
+                str.append("\nWeapon: ")
+                    .append(value.getName());
+            } else {
+                str.append("\n")
+                    .append(key.name())
+                        .append(": ")
+                            .append(value.getName());
+            }
+
+        });
         str.append("\nDamage");
         hero.getEquipment().forEach((key, value) -> {
             if (key == Slot.Weapon) {
@@ -120,7 +130,5 @@ public class Writer {
 
         System.out.println(str);
     }
-
-
 
 }

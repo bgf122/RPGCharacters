@@ -2,8 +2,10 @@ package fi.experis;
 
 import fi.experis.classes.Hero;
 import fi.experis.classes.PrimaryAttributes;
+import fi.experis.classes.Weapon;
 import fi.experis.classes.Writer;
 import fi.experis.enumerators.HeroClass;
+import fi.experis.enumerators.Slot;
 import fi.experis.exceptions.InvalidCustomException;
 
 import java.util.InputMismatchException;
@@ -39,6 +41,8 @@ public class Main {
         }
 
         hero = new Hero(name, level, primaryAttributes, heroClass);
+        Weapon weapon = new Weapon("Unarmed", 1, 1, 1);
+        hero.setEquipment(weapon);
 
     }
 
