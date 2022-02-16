@@ -15,7 +15,7 @@ class ArmorTest {
     Armor testArmor;
     Armor testClothHead;
     Hero hero;
-    
+
     @BeforeEach()
     public void setup() {
         testArmor = new Armor();

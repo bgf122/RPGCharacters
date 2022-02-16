@@ -5,7 +5,6 @@ import fi.experis.classes.PrimaryAttributes;
 import fi.experis.classes.Writer;
 import fi.experis.enumerators.HeroClass;
 import fi.experis.exceptions.InvalidCustomException;
-import fi.experis.exceptions.InvalidWeaponException;
 
 import java.util.InputMismatchException;
 import java.util.Objects;
@@ -15,7 +14,7 @@ public class Main {
     static Hero hero = null;
     static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws InvalidWeaponException {
+    public static void main(String[] args) {
         if (Writer.promptCharacterCreation()) {
             createCharacter();
         }
@@ -24,7 +23,7 @@ public class Main {
         }
     }
 
-    public static void createCharacter() throws InvalidWeaponException {
+    public static void createCharacter() {
         PrimaryAttributes primaryAttributes;
         int level = 1;
         System.out.println("Enter character name: ");
@@ -38,9 +37,7 @@ public class Main {
             case Warrior -> primaryAttributes = new PrimaryAttributes(5, 2, 1);
             default -> throw new IllegalStateException("Unexpected value: " + heroClass);
         }
-
         hero = new Hero(name, level, primaryAttributes, heroClass);
-
     }
 
     public static HeroClass chooseClass() {
@@ -78,13 +75,14 @@ public class Main {
 
     }
 
+    // This is the main function that loops while playing the game
     public static void playTheGame() {
         int input = 0;
         do {
             try {
                 System.out.println("What would you like to do: ");
-                System.out.println("1. XP");
-                System.out.println("2. Loot");
+                System.out.println("1. Level up your character");
+                System.out.println("2. Find new random item");
                 System.out.println("3. Inspect character");
                 System.out.println("4. Quit the Game");
                 input = scanner.nextInt();
