@@ -15,8 +15,7 @@ class ArmorTest {
     Armor testArmor;
     Armor testClothHead;
     Hero hero;
-
-
+    
     @BeforeEach()
     public void setup() {
         testArmor = new Armor();
@@ -37,19 +36,35 @@ class ArmorTest {
     }
 
     @Test
-    public void equip_tooHighArmor_shouldThrowError() throws InvalidArmorException, InvalidWeaponException {
+    public void equip_tooHighArmor_shouldThrowError() {
         testArmor.setLevel(2);
-        hero.equipItem(testArmor);
+
+        InvalidArmorException exception = assertThrows(InvalidArmorException.class, () -> {
+            hero.equipItem(testArmor);
+        });
+
+        String expectedMessage = "Wrong type of equipment or too high level";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
-    public void equip_wrongTypeArmor_shouldThrowError() throws InvalidArmorException, InvalidWeaponException {
-        hero.equipItem(testClothHead);
+    public void equip_wrongTypeArmor_shouldThrowError() {
+        InvalidArmorException exception = assertThrows(InvalidArmorException.class, () -> {
+            hero.equipItem(testClothHead);
+        });
+
+        String expectedMessage = "Wrong type of equipment or too high level";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+
     }
 
     @Test
     public void equip_validArmor_shouldPass() {
-        assertEquals(hero.isValid(testArmor, hero.getHeroClass(), hero.getLevel()), true);
+        assertTrue(hero.isValid(testArmor, hero.getHeroClass(), hero.getLevel()));
     }
 
 }
