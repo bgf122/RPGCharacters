@@ -1,7 +1,5 @@
 package fi.experis.classes;
 
-import fi.experis.exceptions.InvalidArmorException;
-import fi.experis.exceptions.InvalidWeaponException;
 import fi.experis.interfaces.Play;
 import fi.experis.enumerators.Slot;
 

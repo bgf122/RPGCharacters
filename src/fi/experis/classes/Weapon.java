@@ -1,6 +1,5 @@
 package fi.experis.classes;
 
-import fi.experis.enumerators.HeroClass;
 import fi.experis.enumerators.Slot;
 import fi.experis.enumerators.WeaponType;
 

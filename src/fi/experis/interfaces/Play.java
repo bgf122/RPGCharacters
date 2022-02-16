@@ -1,6 +1,5 @@
 package fi.experis.interfaces;
 
-import fi.experis.classes.Item;
 import fi.experis.exceptions.InvalidArmorException;
 import fi.experis.exceptions.InvalidWeaponException;
 

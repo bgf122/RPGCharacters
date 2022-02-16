@@ -2,7 +2,6 @@ package fi.experis;
 
 import fi.experis.classes.Hero;
 import fi.experis.classes.PrimaryAttributes;
-import fi.experis.classes.Weapon;
 import fi.experis.classes.Writer;
 import fi.experis.enumerators.HeroClass;
 import fi.experis.exceptions.InvalidCustomException;
