@@ -110,11 +110,8 @@ public class Hero extends Character {
     }
 
     public void equipItem(Item item) throws InvalidArmorException, InvalidWeaponException{
-        Armor armor;
-        Weapon weapon;
-
         if (item.getSlot() != Slot.Weapon) {
-            armor = (Armor) item;
+            Armor armor = (Armor) item;
             if (isValid(armor, this.heroClass, this.getLevel())) {
                 setEquipment(armor.getSlot(), armor);
                 calculateTotalAttributes();
@@ -122,7 +119,7 @@ public class Hero extends Character {
                 throw new InvalidArmorException("Wrong type of equipment or too high level");
             }
         } else {
-            weapon = (Weapon) item;
+            Weapon weapon = (Weapon) item;
             if (isValid(weapon, this.heroClass, this.getLevel())) {
                 setEquipment(weapon);
             } else {
@@ -132,15 +129,12 @@ public class Hero extends Character {
     }
 
     public boolean isValid(Item item, HeroClass heroClass, int level) {
-        Armor armor;
-        Weapon weapon;
-
         if (level < item.getLevel()) {
             return false;
         }
 
         if (item.getSlot() != Slot.Weapon) {
-            armor = (Armor) item;
+            Armor armor = (Armor) item;
             switch (heroClass) {
                 case Mage -> {
                     if (armor.getArmorType() != ArmorType.Cloth) return false;
@@ -151,7 +145,7 @@ public class Hero extends Character {
                 }
             }
         } else {
-            weapon = (Weapon) item;
+            Weapon weapon = (Weapon) item;
             switch (heroClass) {
                 case Mage -> {
                     if (weapon.getWeaponType() != WeaponType.Staffs && weapon.getWeaponType() != WeaponType.Wands) return false;
