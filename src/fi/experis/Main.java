@@ -75,7 +75,7 @@ public class Main {
 
     }
 
-    // This is the main function that loops while playing the game
+    // This is the main method that loops while playing the game
     public static void playTheGame() {
         int input = 0;
         do {
