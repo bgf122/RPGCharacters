@@ -1,9 +1,9 @@
-package fi.experis;
+package fi.experis.classes;
 
 public class PrimaryAttributes {
-    int Strength;
-    int Dexterity;
-    int Intelligence;
+    private int Strength;
+    private int Dexterity;
+    private int Intelligence;
 
     public PrimaryAttributes(int strength, int dexterity, int intelligence) {
         Strength = strength;
@@ -11,28 +11,29 @@ public class PrimaryAttributes {
         Intelligence = intelligence;
     }
 
-    public int getStrength() {
-        return Strength;
-    }
 
     public void setStrength(int strength) {
         Strength = strength;
-    }
-
-    public int getDexterity() {
-        return Dexterity;
     }
 
     public void setDexterity(int dexterity) {
         Dexterity = dexterity;
     }
 
-    public int getIntelligence() {
-        return Intelligence;
-    }
-
     public void setIntelligence(int intelligence) {
         Intelligence = intelligence;
+    }
+
+    public int getStrength() {
+        return Strength;
+    }
+
+    public int getDexterity() {
+        return Dexterity;
+    }
+
+    public int getIntelligence() {
+        return Intelligence;
     }
 
     @Override

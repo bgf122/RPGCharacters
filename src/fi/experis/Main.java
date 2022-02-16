@@ -1,140 +1,122 @@
 package fi.experis;
 
+import fi.experis.classes.Hero;
+import fi.experis.classes.PrimaryAttributes;
+import fi.experis.classes.Writer;
+import fi.experis.enumerators.HeroClass;
+import fi.experis.exceptions.InvalidCustomException;
+
+import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
-    static Character character = null;
+    static Hero hero = null;
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        if (promptCharacterCreation()) {
+        if (Writer.promptCharacterCreation()) {
             createCharacter();
         }
-        if (character != null) {
+        if (hero != null) {
             playTheGame();
         }
     }
 
-    public static boolean promptCharacterCreation() {
-        System.out.println("No character found, would you like to create a new one?(press 1 or 2)");
-        System.out.println("1. Yes");
-        System.out.println("2. No");
-        String input = scanner.nextLine();
-
-        switch (Integer.parseInt(input)) {
-            case 1 -> {
-                return true;
-            }
-            case 2 -> {
-                return false;
-            }
-            default -> {
-                promptCharacterCreation();
-                return false;
-            }
-        }
-
-    }
-
     public static void createCharacter() {
         PrimaryAttributes primaryAttributes;
+        int level = 1;
         System.out.println("Enter character name: ");
         String name = scanner.nextLine();
-        String heroClass = chooseClass();
-        int level = 1;
+        HeroClass heroClass = chooseClass();
 
-        switch (heroClass) {
-            case "Mage" -> primaryAttributes = new PrimaryAttributes(1, 1, 8);
-            case "Ranger" -> primaryAttributes = new PrimaryAttributes(1, 7, 1);
-            case "Rogue" -> primaryAttributes = new PrimaryAttributes(2, 6, 1);
-            case "Warrior" -> primaryAttributes = new PrimaryAttributes(5, 2, 1);
+        switch (Objects.requireNonNull(heroClass)) {
+            case Mage -> primaryAttributes = new PrimaryAttributes(1, 1, 8);
+            case Ranger -> primaryAttributes = new PrimaryAttributes(1, 7, 1);
+            case Rogue -> primaryAttributes = new PrimaryAttributes(2, 6, 1);
+            case Warrior -> primaryAttributes = new PrimaryAttributes(5, 2, 1);
             default -> throw new IllegalStateException("Unexpected value: " + heroClass);
         }
-
-        character = new Character(name, level, heroClass, primaryAttributes);
+        hero = new Hero(name, level, primaryAttributes, heroClass);
     }
 
-    public static String chooseClass() {
-        System.out.println("Choose class: ");
-        System.out.println("1. Mage");
-        System.out.println("2. Ranger");
-        System.out.println("3. Rogue");
-        System.out.println("4. Warrior");
-        String selection = scanner.nextLine();
+    public static HeroClass chooseClass() {
+        int input = 0;
 
-        switch (Integer.parseInt(selection)) {
+        do {
+            try {
+                System.out.println("Choose class: ");
+                System.out.println("1. Mage");
+                System.out.println("2. Ranger");
+                System.out.println("3. Rogue");
+                System.out.println("4. Warrior");
+                input = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid entry try again");
+            }
+            scanner.nextLine();
+        } while (input != 1 && input != 2 && input != 3 && input != 4);
+
+        switch (input) {
             case 1 -> {
-                return "Mage";
+                return HeroClass.Mage;
             }
             case 2 -> {
-                return "Ranger";
+                return HeroClass.Ranger;
             }
             case 3 -> {
-                return "Rogue";
+                return HeroClass.Rogue;
             }
             case 4 -> {
-                return "Warrior";
+                return HeroClass.Warrior;
             }
-            default -> chooseClass();
+            default -> throw new IllegalStateException("Unexpected value: " + input);
         }
-        return "Invalid";
+
     }
 
+    // This is the main method that loops while playing the game
     public static void playTheGame() {
-        System.out.println("What would you like to do: ");
-        System.out.println("1. XP");
-        System.out.println("2. Loot");
-        System.out.println("3. Inspect character");
-        System.out.println("0. Quit the Game");
-        String selection = scanner.nextLine();
+        int input = 0;
+        do {
+            try {
+                System.out.println("What would you like to do: ");
+                System.out.println("1. Level up your character");
+                System.out.println("2. Find new random item");
+                System.out.println("3. Inspect character");
+                System.out.println("4. Quit the Game");
+                input = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid entry try again");
+            }
+            scanner.nextLine();
+        } while (input != 1 && input != 2 && input != 3 && input != 4);
 
-        switch (Integer.parseInt(selection)) {
-            case 1 -> getMoreXp();
-            case 2 -> getNewItems();
-            case 3 -> inspect();
-            case 0 -> {
+        switch (input) {
+            case 1 -> {
+                hero.getXp();
+                System.out.println("Congratulations you have reached level " + hero.getLevel() + "!");
+                Writer.resume();
+                playTheGame();
+            }
+            case 2 -> {
+                try {
+                    hero.getItems();
+                } catch (InvalidCustomException e) {
+                    System.out.println(e.getMessage());
+                }
+                Writer.resume();
+                playTheGame();
+            }
+            case 3 -> {
+                hero.inspect();
+                Writer.resume();
+                playTheGame();
+            }
+            case 4 -> {
             }
             default -> playTheGame();
         }
     }
 
-    public static void getMoreXp() {
-        PrimaryAttributes primaryAttributes = character.getBasePrimaryAttributes();
-        String heroClass = character.getHeroClass();
-        levelUp(primaryAttributes, heroClass);
-        character.setLevel(character.getLevel() + 1);
-        System.out.println("Congratulations you have reached level " + character.getLevel() + "!");
-        resume();
-    }
-
-    public static void getNewItems() {
-        System.out.println("You have found some new item!");
-        resume();
-    }
-
-    public static void inspect() {
-        System.out.println(character);
-        resume();
-    }
-
-    public static void resume() {
-        System.out.println("Press enter to continue...");
-        String selection = scanner.nextLine();
-        if (selection != null) {
-            playTheGame();
-        }
-    }
-    
-    public static void levelUp(PrimaryAttributes attributes, String heroClass) {
-        PrimaryAttributes newBaseAttributes;
-        switch (heroClass) {
-            case "Mage" -> newBaseAttributes = new PrimaryAttributes(attributes.Strength+1, attributes.Dexterity+1, attributes.Intelligence+5);
-            case "Ranger" -> newBaseAttributes = new PrimaryAttributes(attributes.Strength+1, attributes.Dexterity+5, attributes.Intelligence+1);
-            case "Rogue" -> newBaseAttributes = new PrimaryAttributes(attributes.Strength+1, attributes.Dexterity+4, attributes.Intelligence+1);
-            case "Warrior" -> newBaseAttributes = new PrimaryAttributes(attributes.Strength+3, attributes.Dexterity+2, attributes.Intelligence+5);
-            default -> throw new IllegalStateException("Unexpected value: " + heroClass);
-        }
-        character.setBasePrimaryAttributes(newBaseAttributes);
-    }
- 
 }
